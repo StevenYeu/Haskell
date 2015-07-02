@@ -55,10 +55,32 @@ pack (x:xs) = if x `elem` (head (pack xs))
               then (x:(head (pack xs))):(tail (pack xs))
               else [x]:(pack xs)
 
--- Problem #10
+-- Problem # 10
 encode :: (Eq a) => [a] -> [(Int,a)]
 encode x = map (\l -> (length l, head l)) (group x)
+
+-- Problem # 11
+data ListElemt a = Single a | Multiple Int a
+  deriving (Show)
+encodeModified :: (Eq a) => [a] -> [ListElemt a]
+encodeModified xs  = map helper (encode xs) 
+  where helper (1,a) = Single a
+        helper (n,a) = Multiple n a
 
 -- Problem # 14
 dupli :: [a] -> [a]
 dupli l = foldl (\acc elmet -> acc ++ [elmet,elmet]) [] l
+
+-- Problem # 15
+relpi :: [a] -> Int -> [a]
+relpi l n = concatMap (replicate n) l
+
+-- Problem # 16
+dropEvery :: [a] -> Int -> [a]
+-- Assuming 0 is first index
+dropEvery x n = fst $ foldl helper ([],0) x
+   where helper (acc,index) elemt = if index == n then (acc,0) else (acc++[elemt],index+1)
+
+-- Problem # 17
+split :: [a] -> Int -> ([a],[a])
+split x n = ([],[])
