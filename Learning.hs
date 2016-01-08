@@ -1,5 +1,9 @@
 import Data.List
 
+-- Sieve of Eratosthenes
+sieve :: Integral a => a -> [a]
+sieve n = [ x| x <-[2..n], all (\f-> x `mod` f /= 0) [2..floor(sqrt(fromIntegral x))] ]
+
 count l x = foldl (\acc elmet -> if elmet == x then acc+1 else acc) 0 l
 
 sum1 :: Num a => [a] -> a
@@ -63,13 +67,16 @@ encode x = map (\l -> (length l, head l)) (group x)
 data ListElemt a = Single a | Multiple Int a
   deriving (Show)
 encodeModified :: (Eq a) => [a] -> [ListElemt a]
-encodeModified xs  = map helper (encode xs) 
+encodeModified xs  = map helper (encode xs)
   where helper (1,a) = Single a
         helper (n,a) = Multiple n a
 
+-- Problem # 12
+
+
 -- Problem # 14
 dupli :: [a] -> [a]
-dupli l = foldl (\acc elmet -> acc ++ [elmet,elmet]) [] l
+dupli l = foldl (\acc elm -> acc ++ [elm,elm]) [] l
 
 -- Problem # 15
 relpi :: [a] -> Int -> [a]
@@ -83,4 +90,9 @@ dropEvery x n = fst $ foldl helper ([],0) x
 
 -- Problem # 17
 split :: [a] -> Int -> ([a],[a])
-split x n = ([],[])
+split l x = fst $ foldl helper (([],[]),0) l 
+   where helper ((left,right),i) elm = if i < x then ((left++[elm],right),i+1) else ((left,right++[elm]),i+1)
+
+-- Problem #18
+slice :: [a] -> Int -> Int -> [a]
+slice [] x y = []
