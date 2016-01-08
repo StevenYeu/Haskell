@@ -4,6 +4,13 @@ import Data.List
 sieve :: Integral a => a -> [a]
 sieve n = [ x| x <-[2..n], all (\f-> x `mod` f /= 0) [2..floor(sqrt(fromIntegral x))] ]
 
+-- A filter funciton
+filter' :: (a->Bool) -> [a] -> [a]
+filter' p [] = []
+filter' p (x:xs) 
+   | p x = x : filter' p xs
+   | otherwise = filter' p xs
+
 count l x = foldl (\acc elmet -> if elmet == x then acc+1 else acc) 0 l
 
 sum1 :: Num a => [a] -> a
