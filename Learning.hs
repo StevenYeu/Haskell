@@ -7,7 +7,7 @@ sieve n = [ x| x <-[2..n], all (\f-> x `mod` f /= 0) [2..floor(sqrt(fromIntegral
 -- A filter funciton
 filter' :: (a->Bool) -> [a] -> [a]
 filter' p [] = []
-filter' p (x:xs) 
+filter' p (x:xs)
    | p x = x : filter' p xs
    | otherwise = filter' p xs
 
@@ -97,9 +97,13 @@ dropEvery x n = fst $ foldl helper ([],0) x
 
 -- Problem # 17
 split :: [a] -> Int -> ([a],[a])
-split l x = fst $ foldl helper (([],[]),0) l 
+split l x = fst $ foldl helper (([],[]),0) l
    where helper ((left,right),i) elm = if i < x then ((left++[elm],right),i+1) else ((left,right++[elm]),i+1)
 
 -- Problem #18
 slice :: [a] -> Int -> Int -> [a]
 slice [] x y = []
+
+-- Problem #19
+rotate :: [a] -> Int -> [a]
+rotate [a] _ = [a]
